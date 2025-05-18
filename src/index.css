@@ -1,0 +1,13 @@
+.auth-container{
+    background-image: url(../src/assets/images/ella-olsson-C1Q3qOTlegg-unsplash\ 1.png);
+    background-size: cover;
+    background-position: center center;
+
+}
+.overlay{
+    background: linear-gradient(45deg, rgba(55, 140, 47, 0.413), rgba(0, 0, 0, 0.436));
+}
+
+.auth-button{
+    background-color: rgba(74, 163, 90, 1)      !important; 
+}
