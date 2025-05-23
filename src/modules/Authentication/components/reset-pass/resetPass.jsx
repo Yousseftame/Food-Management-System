@@ -3,7 +3,7 @@ import logo from '../../../../assets/images/4 3.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 
 
 
@@ -27,7 +27,17 @@ export default function resetPass() {
     //success
     let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Reset',data);
     console.log(response);
-     toast('Password Updated Successfully' )
+      toast.success('Password Updated Successfully', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "dark",
+transition: Bounce,
+});
     navigate("/Login");      
     
 
@@ -36,7 +46,7 @@ export default function resetPass() {
 
   } catch (error) {
     //failure
-    toast('Email or Password not Correct' )
+    toast.error('Email or Password not Correct' )
     console.log(error);
 
 

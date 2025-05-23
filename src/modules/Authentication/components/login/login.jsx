@@ -3,7 +3,7 @@ import logo from '../../../../assets/images/4 3.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 
 
 
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 
  
-export default function login() {
+export default function login({saveLoginData}) {
      
 
 
@@ -26,9 +26,20 @@ export default function login() {
     try {
     //success
     let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Login',data);
-    console.log(response);
+    localStorage.setItem('token',response.data.token);
+    saveLoginData();
     navigate('/dashboard');
-    toast('login Successfully' )
+     toast.success('Login successful!', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "dark",
+transition: Bounce,
+});
       
     
 
@@ -37,15 +48,24 @@ export default function login() {
 
   } catch (error) {
     //failure
-    toast('Email or Password not Correct' )
-    console.log(error);
+ toast.error('  Email or Password not Correct', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "dark",
+transition: Bounce,
+});   
+ console.log(error);
     
 
 
     
   }
   }
-  
 
   
   return (

@@ -11,3 +11,102 @@
 .auth-button{
     background-color: rgba(74, 163, 90, 1)      !important; 
 }
+.orginialGreenBg{
+    background-image: url(../src/assets/images/Untitled\ design.png);
+    background-size: cover;
+    background-position: center center;
+
+}
+
+.sideContainer .ps-sidebar-container{
+    background-color: rgba(31, 38, 62, 1);
+    height: 100vh;
+    border-top-right-radius: 50px 50px;
+}
+
+.sideContainer .ps-menu-button{
+    color: white !important;
+    transition: 300ms all;
+   
+}
+
+.sideContainer .ps-menu-button:hover{
+    background-color:rgba(0, 146, 71, 0.1) !important ;
+    border-left: 4px solid rgba(0, 146, 71, 1);
+ 
+}
+
+.sideContainer .sidebarLogo a:hover{
+    background-color: transparent !important;
+    border: none;
+
+}
+.sideContainer .sidebarLogo a{
+    padding: 0 !important;
+    
+
+}
+.sideContainer .ps-menu-button img{
+    width: 80px;
+    
+}
+.headingStyle{
+    display: inline;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 100%;
+    padding-left: 30px;
+    
+}
+.headingStyle2{
+    display: inline;
+    font-size: 32px;
+    font-weight: 400;
+}
+.paragraphStyle{
+    margin-top: 20px;
+    font-size:16px;
+    font-weight: 400;
+    line-height: 24px;
+     padding-left: 30px;
+
+}
+.dashboardFooter span{
+    color: rgba(0, 146, 71, 1);
+}
+.dashboardFooter{
+    background-color: rgba(240, 255, 239, 1);
+    padding: 30px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.speacingCaption{
+    padding-left: 30px;
+}
+.dashboardFooter p{
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(31, 38, 62, 1);
+}
+.btnStyle {
+    background-color: rgba(0, 146, 71, 1) !important;
+    padding: 5px 40px !important;
+    
+}
+.categoryParagaph{
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(60, 71, 107);
+}
+.headCatgory{
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+}
+
+
+
+
+
+
+

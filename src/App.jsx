@@ -4,8 +4,11 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
+
+
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider, useNavigate } from 'react-router-dom';
 import Login from './modules/Authentication/components/login/login'
 import AuthLayout from './modules/shared/components/authLayout/authLayout'
 import Register from './modules/Authentication/components/register/register'
@@ -21,12 +24,38 @@ import CategoriesList from './modules/categories/components/categoriesList/categ
 import CategoriesData from './modules/categories/components/categoriesData/categoriesData';
 import UsersList from './modules/users/componets/usersList/usersList';
 import FavList from './modules/favourites/components/favList/favList'
+import { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import ProtectedRoute from './modules/shared/components/protectedRoute/protectedRoute';
+import { Bounce, ToastContainer } from 'react-toastify'
+
+
 
 function App() {
+  
+
+  const [loginData , setLoginData] = useState(null)
+  let saveLoginData = () =>{
+    let encodedToken = localStorage.getItem('token'); // get from local storage
+    let decodedToken = jwtDecode(encodedToken);   // decode the token 
+    // console.log(decodedToken);
+    setLoginData(decodedToken); // set the token ( login data user ) in the loginData variable
+  }
+   
 
   
+
+  useEffect( ()=>{
+    if (localStorage.getItem('token')) {
+      saveLoginData();  
+    }
+  },[])
+  
+
+
   const Routes = createBrowserRouter([
     {
+    
   
       path:'',
       element:<AuthLayout/>,
@@ -34,12 +63,12 @@ function App() {
       children:[
         {
           path:'', 
-          element:<Login/>
+          element:<Login  saveLoginData={saveLoginData}/>
           
         },
          {
           path:'login', 
-          element:<Login/>
+          element:<Login saveLoginData={saveLoginData}/>
           
         },
          {
@@ -68,13 +97,13 @@ function App() {
     
     {
       path: '/dashboard',
-      element: <MasterLayout/>,
+      element: <ProtectedRoute loginData={loginData}> <MasterLayout setLoginData={setLoginData}  /> </ProtectedRoute> ,
       errorElement:<NotFound/>,
       
       children:[
           {
             index:true,
-            element: <Dashboard/>
+            element: <Dashboard loginData={loginData}/>
           },
            {
             path:'recipes',
@@ -113,6 +142,19 @@ function App() {
   return (
     <>
       <RouterProvider router={Routes}></RouterProvider>
+      <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+transition={ Bounce}
+/>
     </>
   )
 }
