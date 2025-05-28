@@ -94,7 +94,7 @@ function App() {
         },
          {
           path:'change-password', 
-          element:<ChangePass saveLoginData={saveLoginData}/>
+          element:<ChangePass />
           
         },
       ],

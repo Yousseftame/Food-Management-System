@@ -7,7 +7,7 @@ import { Bounce, toast } from 'react-toastify';
 import { axiosInstance, USERS_URLS } from '../../../../services/urls';
 import { EMAIL_VALIDATION } from '../../../../services/validation';
 
-export default function changePassword({saveLoginData}) {
+export default function changePassword() {
     const [isFirstPassVisible, setIsFirstPassVisible] = useState(false); // eye flash password
     const [isSecondPassVisible, setIsSecondPassVisible] = useState(false); // eye flash password
     
