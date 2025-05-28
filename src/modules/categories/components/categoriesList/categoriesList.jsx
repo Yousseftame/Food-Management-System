@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
+import { axiosInstance, CATEGORY_URLS } from '../../../../services/urls';
 
 
 
@@ -73,6 +74,9 @@ const [category, setCategory] = useState("");
           headers:{
             Authorization :localStorage.getItem('token')
           }});
+                // let response = await axiosInstance.get(`${CATEGORY_URLS.GET_CATEGORY}`,
+                //   {params:{pageSize:2,pageNumber:1}});
+
           console.log(response);
           
     setCategoriesList(response.data.data);
@@ -142,6 +146,8 @@ const [category, setCategory] = useState("");
           headers:{
             Authorization :localStorage.getItem('token')
           }});
+          // let respone = await axiosInstance.delete(CATEGORY_URLS.DELETE_CATEGORY(catId))
+
           // console.log(response);
           getAllCategories();           // refresh comp to show new list after delete
           handleClose();                // then close the model
@@ -286,7 +292,7 @@ const [category, setCategory] = useState("");
       <div className="d-flex justify-content-between align-items-center   p-4">
 
         <div>
-        <h3 className='headCatgory'>Recipe Table Details</h3>
+        <h3 className='headCatgory'>Category Table Details</h3>
         <p className='categoryParagaph'>You can check all details</p>
         </div>
 
@@ -294,7 +300,7 @@ const [category, setCategory] = useState("");
       </div>
 
       <div className="p-4">
-      <table className=' table table-striped text-center'>
+      <table className=' table table-striped text-center '>
         <thead>
           <th>Name</th>
           <th>Creation Date</th>
@@ -338,9 +344,7 @@ const [category, setCategory] = useState("");
 
 
            
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     </>
   )

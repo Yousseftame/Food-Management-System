@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../../../assets/images/4 3.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
+import { axiosInstance, USERS_URLS } from '../../../../services/urls';
+import { EMAIL_VALIDATION } from '../../../../services/validation';
 
 
 
@@ -16,9 +18,10 @@ export default function login({saveLoginData}) {
      
 
 
+  const [isPasswordVisible, setIsPasswordVisible]= useState(false); //eye flash password close and open to convert from password to text
 
   let navigate = useNavigate();
-  let {register,formState:{errors} ,handleSubmit} = useForm();
+  let {register,formState:{errors, isSubmitting} ,handleSubmit} = useForm();
  
   const onSubmit = async(data)=> {
     // console.log(data);
@@ -26,6 +29,8 @@ export default function login({saveLoginData}) {
     try {
     //success
     let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Login',data);
+    //  let response = await axiosInstance.post(USERS_URLS.LOGIN,data);
+
     localStorage.setItem('token',response.data.token);
     saveLoginData();
     navigate('/dashboard');
@@ -48,7 +53,7 @@ transition: Bounce,
 
   } catch (error) {
     //failure
- toast.error('  Email or Password not Correct', {
+ toast.error( error?.response?.data?.message ||'  Email or Password not Correct', {
 position: "top-right",
 autoClose: 5000,
 hideProgressBar: false,
@@ -85,19 +90,13 @@ transition: Bounce,
 
               <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-envelope"></i></span>
-              <input {...register('email',{
-                required:'email is required',
-                pattern:{
-                  value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message:'Email not valid, enter a valid email'
-                }
-              })} type="text" className="form-control" placeholder="Email" aria-label="Username" aria-describedby="addon-wrapping"/>
+              <input {...register('email', EMAIL_VALIDATION)} type="text" className="form-control" placeholder="Email" aria-label="Username" aria-describedby="addon-wrapping"/>
               </div>
               {errors.email&&<span className='text-danger'>{errors.email.message}   </span>}
 
               <div className="input-group flex-nowrap mt-3">
               <span className="input-group-text" id="addon-wrapping"> <i className="fa-solid fa-lock"></i></span>
-              <input  placeholder='password' className="form-control" type='password' {...register("password",{
+              <input  placeholder='password' className="form-control" type={isPasswordVisible ? 'text' : 'password'} {...register("password",{
                 required:'password is required',
                 pattern:{
                   value:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/,
@@ -105,17 +104,26 @@ transition: Bounce,
                 }
 
               })}/>
+
+              <button type='button' onClick={()=>setIsPasswordVisible((prev)=>!prev)} // flag to swtich eye open or close
+               onMouseDown={(e)=> e.preventDefault()} onMouseUp={(e)=> e.preventDefault} // to prevent the feature of unfocus when i click on the icon 
+               className="input-group-text" id="addon-wrapping">
+                 <i  className={` ${isPasswordVisible ? " fa-solid fa-eye" : " fa-solid fa-eye-slash"}`}></i></button> 
+                 {/* defualt is not visible so no eye and if it become visible will be eye */}
+
+              
               </div>
               {errors.password&&<span className='text-danger ps-1'>{errors.password.message}</span>}
 
 
               <div className='d-flex justify-content-between mt-2 '>
                 <Link className='text-black text-decoration-none' to='/register'> Register Now? </Link>
-                <Link className='text-success  text-decoration-none' to={'/forget-pass'}> Forget Password? </Link>
+                <Link className='text-success  text-decoration-none' to={'/forget-password'}> Forget Password? </Link>
                
               </div>
 
-              <button   className='auth-button btn btn-success w-100 my-4'>Login </button>
+              <button  disabled={isSubmitting}  className='auth-button btn btn-success w-100 my-4'>{isSubmitting? "Submittting ...": "Login"} </button>  
+                {/* issumbitting de 3lashn m3mlsh submit aktr mn mara w a3ml headache 3la back end */}
               
 
 

@@ -104,6 +104,79 @@
     line-height: 100%;
 }
 
+.item-img{
+    width: 60px;
+    border-radius: 50%;
+}
+.yarab a{
+    color: white;
+}
+
+.bg-notFound{
+    
+    background-image: url(../src/assets/images/Vector.png);
+    background-size: cover;
+    background-position: center center;
+    
+}
+.errorIconImg{
+    padding-left: 60px;
+    padding-top: 40px;
+}
+.errorCaption{
+    margin-top: 40px;
+    margin-left: 90px;
+}
+.fstErrorHeading{
+    font-family: Inter;
+font-weight: 700;
+font-size: 120px;
+line-height: 100%;
+letter-spacing: 0%;
+
+}
+
+.secErrorHeading{
+    font-family: Inter;
+font-weight: 400;
+font-size: 120px;
+line-height: 100%;
+letter-spacing: 0%;
+color: rgba(0, 146, 71, 1);
+}
+
+.errorCaption p{
+    padding-top: 15px;
+    font-family: Inter;
+font-weight: 400;
+font-size: 35px;
+line-height: 24px;
+letter-spacing: 4%;
+color: rgba(31, 38, 62, 1);
+}
+.errorbtn{
+    width: 50% !important;
+    color: white !important;
+    margin-top: 40px;
+    padding: 20px 40px !important;
+    font-size: 30px !important;
+    border-radius: 10px !important;
+    text-decoration: none;
+}
+.errorbtn a{
+    text-decoration: none;
+    color: white;
+}
+
+
+
+
+.imgerror404 img{
+    width: 1000px;
+
+}
+
+
 
 
 

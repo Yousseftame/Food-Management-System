@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import sideLogo from '../../../../assets/images/3.png'
+import changePassword from '../../../Authentication/components/change-pass/changePassword';
 
 
 
@@ -33,7 +34,7 @@ export default function sideBar({loginData,setLoginData}) {
     <MenuItem icon={<i class="fa-solid fa-users"></i>} component={<Link to="/dashboard/users" />}> Users </MenuItem>
     <MenuItem icon={<i class="fa-solid fa-table-cells"></i>} component={<Link to="/dashboard/recipes" />}> Recipes </MenuItem>
     <MenuItem icon={<i class="fa-solid fa-table-cells-row-lock"></i>} component={<Link to="/dashboard/categories" />}> Categories </MenuItem>
-    <MenuItem icon={<i class="fa-solid fa-unlock-keyhole"></i>} component={<Link to="/forget-pass" />}> Change Password </MenuItem>
+    <MenuItem icon={<i class="fa-solid fa-unlock-keyhole"></i>} component={<Link to="/change-password" />}> Change Password </MenuItem>
     <MenuItem  onClick={logOut} icon={<i class="fa-solid fa-right-from-bracket"></i>} > Log out </MenuItem>
   </Menu>
 </Sidebar>;

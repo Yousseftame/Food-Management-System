@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function dashboard() {
+    
       const navigate =useNavigate();
-      let moveRecipe =()=>{
-        navigate('/dashboard/recipes')
-      }
+      
   
 
 
@@ -26,7 +25,7 @@ export default function dashboard() {
       </div>
       
 
-      <button onClick={moveRecipe} className='  btn  btn-success btnStyle '>Fill  recipes <img src={dashArrow}alt="" /> </button>
+      <button onClick={()=>{navigate('/dashboard/recipes')} } className='  btn  btn-success btnStyle '>Fill  recipes <img src={dashArrow}alt="" /> </button>
 
           </div>
 
