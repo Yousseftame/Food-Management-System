@@ -1,7 +1,11 @@
+body{
+    overflow-x: hidden;
+}
 .auth-container{
     background-image: url(../src/assets/images/ella-olsson-C1Q3qOTlegg-unsplash\ 1.png);
     background-size: cover;
     background-position: center center;
+
 
 }
 .overlay{
@@ -20,8 +24,14 @@
 
 .sideContainer .ps-sidebar-container{
     background-color: rgba(31, 38, 62, 1);
-    height: 100vh;
+    height: 130vh;
     border-top-right-radius: 50px 50px;
+
+}
+
+.noDataDiv{
+    padding-top: 80px;
+    padding-left: 300px;
 }
 
 .sideContainer .ps-menu-button{
@@ -175,6 +185,59 @@ color: rgba(31, 38, 62, 1);
     width: 1000px;
 
 }
+.cardImg  {
+    width: 100px;
+    height: 300px;
+}
+
+.textCard{
+    font-size: 25px !important;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.descCard{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.iconCard{
+    color: green !important;
+    
+    padding: 8px;
+    margin-top: 10px;
+    margin-right: 10px;
+   background-color: aliceblue;
+    /* border: 2px #000 solid ; */
+    border-radius: 40%;
+    transition: 1s all;
+
+}
+.iconCard:hover{
+    color: white !important;
+    background-color: green ;
+    /* border: none; */
+}
+.dragCustom{
+    background-color: #f4fff4;
+    cursor: pointer;
+}
+
+.viewText{
+font-family:cursive;
+font-size: 18px;
+
+
+}
+
+.viewAnswer{
+    
+}
+
+.viewHead{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+
 
 
 

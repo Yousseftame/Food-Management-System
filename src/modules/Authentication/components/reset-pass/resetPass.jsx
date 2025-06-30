@@ -91,7 +91,7 @@ transition: Bounce,
               {errors.email&&<span className='text-danger ps-1'>{errors.email.message||"invalid email"}</span>}
       
                <div className="input-group flex-nowrap mt-3">
-              <span className="input-group-text" id="addon-wrapping"> <i className="fa-solid fa-lock"></i></span>
+              <span className="input-group-text" id="addon-wrapping"> <i class="fa-solid fa-mobile-screen-button"></i></span>
              <input  placeholder='OTP' className="form-control" type='text' {...register("seed",{required:"OTP is required"})}/>
               </div>
               {errors.seed?.type=="required"&&<span className='text-danger ps-1'>{errors.seed.message}</span>}

@@ -35,22 +35,7 @@ import ChangePass from './modules/Authentication/components/change-pass/changePa
 function App() {
   
 
-  const [loginData , setLoginData] = useState(null)
-  let saveLoginData = () =>{
-    let encodedToken = localStorage.getItem('token'); // get from local storage
-    let decodedToken = jwtDecode(encodedToken);   // decode the token 
-    // console.log(decodedToken);
-    setLoginData(decodedToken); // set the token ( login data user ) in the loginData variable
-  }
-   
-
-  
-
-  useEffect( ()=>{
-    if (localStorage.getItem('token')) {
-      saveLoginData();  
-    }
-  },[])
+ 
   
 
 
@@ -64,12 +49,12 @@ function App() {
       children:[
         {
           path:'', 
-          element:<Login  saveLoginData={saveLoginData}/>
+          element:<Login  />
           
         },
          {
           path:'login', 
-          element:<Login saveLoginData={saveLoginData}/>
+          element:<Login />
           
         },
          {
@@ -103,13 +88,13 @@ function App() {
     
     {
       path: '/dashboard',
-      element: <ProtectedRoute loginData={loginData}> <MasterLayout setLoginData={setLoginData}  /> </ProtectedRoute> ,
+      element: <ProtectedRoute > <MasterLayout   /> </ProtectedRoute> ,
       errorElement:<NotFound/>,
       
       children:[
           {
             index:true,
-            element: <Dashboard loginData={loginData}/>
+            element: <Dashboard />
           },
            {
             path:'recipes',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../../shared/components/header/header'
 import recipePic  from '../../../../assets/images/Group 48102127.png'
 import axios from 'axios';
@@ -9,19 +9,26 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
-import { axiosInstance, CATEGORY_URLS } from '../../../../services/urls';
+import { axiosInstance, baseURLs, CATEGORY_URLS } from '../../../../services/urls';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AuthContext } from '../../../../context/AuthContext';
 
 
 
 export default function categoriesList() {
       
+  let {loginData} = useContext(AuthContext);
+ const  params = useParams();
 const [category, setCategory] = useState("");
 
-
-      let {register,formState:{errors} ,handleSubmit,}= useForm();
+      const [arrayOfPages,setArrayOfPages]= useState([]);   //pageination
+      let {register,formState:{errors} ,handleSubmit,reset}= useForm();
       const [catId, setCatId] = useState(null);
       const [categoriesList, setCategoriesList]= useState([]);
       const [viewList, setViewList]= useState([]);
+      const [nameValue,setNameValue]= useState("")  //search 
+      const navigate = useNavigate();
+
 
       //toastify
       const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
@@ -55,28 +62,51 @@ const [category, setCategory] = useState("");
     setShowAdd(true);
   }
 
-  // model bootstrap lists show
-  const [showView, setShowView] = useState(false);
-  const handleCloseView = () => setShowView(false);
-  const handleShowView = (id) => {
-    setCatId(id)
-    setShowView(true);
+    // model bootstrap lists show
+    const [showView, setShowView] = useState(false);
+    const handleCloseView = () => setShowView(false);
+    const handleShowView = (id) => {
+      setCatId(id)
+      setShowView(true);
+    }
+
+
+
+ // search function 
+  const  getNameValue=(input)=>{
+    setNameValue(input.target.value);
+    getAllCategories(5,1,input.target.value)
+
+    
   }
 
-
-
-
-  // list function
-  let getAllCategories = async() =>{
+  // list function + search
+  let getAllCategories = async(pageSize,pageNumber,name) =>{
     try {
-      let response = await axios.get('https://upskilling-egypt.com:3006/api/v1/Category/?pageSize=5&pageNumber=1',
-        {
-          headers:{
-            Authorization :localStorage.getItem('token')
-          }});
-                // let response = await axiosInstance.get(`${CATEGORY_URLS.GET_CATEGORY}`,
-                //   {params:{pageSize:2,pageNumber:1}});
+      // let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/?${pageSize}=&${pageNumber}=`,
+      //   {
+      //     headers:{
+      //       Authorization :localStorage.getItem('token')
+      //     }});
 
+          let response = await axios.get(`${baseURLs}/api/v1/Category/`, {
+         headers:{
+            Authorization :localStorage.getItem('token')
+          },
+        params: {
+          pageSize,
+          pageNumber,
+          name,
+        },
+         });
+
+
+
+          
+                // let response = await axiosInstance.get(`${CATEGORY_URLS.GET_CATEGORY}`,
+                //   {params:{pageSize,pageNumber,name}});
+
+                setArrayOfPages(Array(response.data.totalNumberOfPages).fill().map((_,i)=>i+1)); //pagination
           console.log(response);
           
     setCategoriesList(response.data.data);
@@ -94,6 +124,7 @@ const [category, setCategory] = useState("");
           }}); 
           // console.log(resposne);
           getAllCategories();
+          reset();
           
           handleCloseAdd();
           
@@ -121,6 +152,7 @@ const [category, setCategory] = useState("");
           }});
           // console.log(response);
           getAllCategories();
+          reset();
           handleCloseUpdate();
           toast.promise(
     resolveAfter3Sec,
@@ -178,6 +210,7 @@ const [category, setCategory] = useState("");
           }}); 
           //  console.log(response.data);
            setViewList(response.data)
+           
           
 
         
@@ -191,7 +224,14 @@ const [category, setCategory] = useState("");
 
 
   useEffect ( ()=>{
-    getAllCategories();
+    if (loginData?.userGroup != 'SuperAdmin') {
+
+      navigate("/Login");      
+
+
+      
+    }
+    getAllCategories(5,1,"");
    
 
   },[])
@@ -265,13 +305,13 @@ const [category, setCategory] = useState("");
             {/* View model list  */}
           <Modal show={showView} onHide={handleCloseView}>
         <Modal.Header closeButton >
-          Category Details
+        <h4 className='viewHead'>   Category Details </h4>
         </Modal.Header>
         <Modal.Body   > 
           <div>
-           <h6>  Category name :  {viewList.name} </h6>
-           <h6>  Creation Date  :   {viewList.creationDate}           </h6>
-           <h6>  Modification Date  :   {viewList.modificationDate}           </h6>
+           <h5> <span className='viewText'> ⭕ Category name : </span>  <span className='viewAnswer text-muted'> {viewList.name}  </span></h5>
+           <h5> <span className='viewText'> ⭕ Creation Date : </span>   <span className='viewAnswer text-muted'>  {viewList.creationDate}  </span>         </h5>
+           <h5> <span className='viewText'> ⭕ Modification Date :</span> <span className='viewAnswer text-muted' >   {viewList.modificationDate}  </span>         </h5>
           </div>
           
             </Modal.Body>
@@ -299,8 +339,16 @@ const [category, setCategory] = useState("");
         <button onClick={handleShowAdd} className='btn btn-success btnStyle me-5'>Add New Category</button>
       </div>
 
+            
+
       <div className="p-4">
-      <table className=' table table-striped text-center '>
+        {/* search input */}
+        <div class="input-group pb-4">
+  <span class="input-group-text" id="visible-addon">  <i className="bi bi-search  "></i></span>
+  <input type="text" class="form-control" placeholder="Search Here by Name" aria-label="Username" aria-describedby="visible-addon" onChange={getNameValue}/>
+  <input type="text" class="form-control d-none" placeholder="Hidden input" aria-label="Hidden input" aria-describedby="visible-addon"  />
+</div>
+      <table className=' table table-striped-columns text-center shadow-lg    '>
         <thead>
           <th>Name</th>
           <th>Creation Date</th>
@@ -314,17 +362,17 @@ const [category, setCategory] = useState("");
             <td>{item.name}</td>
             <td>{item.creationDate}</td>
             <td>{item.modificationDate}</td>
-            <td>
-<div class="dropdown">
-  <button class="btn   " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-<i class="bi bi-three-dots"></i>  
+            <td>  
+<div className="dropdown">
+  <button className="btn   " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+<i className="bi bi-three-dots"></i>  
 </button>
-  <ul class="dropdown-menu">
+  <ul className="dropdown-menu">
     
             <tr>
-        <li><a   onClick={()=>handleShowView(item.id)} class="dropdown-item" href="#"><i class="bi bi-eye  text-success"></i> View</a></li>
-        <li><a  onClick={()=>handleShowUpdate(item.id)} class="dropdown-item" href="#"><i class="bi bi-pencil text-success"></i> Edit</a></li>
-        <li><a  onClick={()=>handleShow(item.id)} class="dropdown-item text-danger" href="#"><i  class="bi bi-trash "></i> Delete</a></li>
+        <li><a   onClick={()=>handleShowView(item.id)} className="dropdown-item"  ><i className="bi bi-eye  text-success"></i> View</a></li>
+        <li><a  onClick={()=>handleShowUpdate(item.id)} className="dropdown-item" ><i className="bi bi-pencil text-success"></i> Edit</a></li>
+        <li><a  onClick={()=>handleShow(item.id)} className="dropdown-item text-danger"><i  className="bi bi-trash "></i> Delete</a></li>
          </tr>
   </ul>
 </div>
@@ -337,7 +385,23 @@ const [category, setCategory] = useState("");
         </tbody>
 
 
+
+
       </table>
+      
+ 
+ {/* pagination */}
+ {categoriesList.length >0 ?
+<nav aria-label="...">
+  <ul class="pagination pagination-md d-flex justify-content-center pt-3">
+    
+    {arrayOfPages.map(pageNo=>
+          <li onClick={()=> getAllCategories(5,pageNo)} class="page-item"><a class="page-link">{pageNo}</a></li>
+
+    )}
+  </ul>
+</nav> : ""}
+
       </div>
            
 

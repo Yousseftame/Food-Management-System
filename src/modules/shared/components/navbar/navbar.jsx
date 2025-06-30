@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,11 +7,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {   FormControl, Dropdown } from "react-bootstrap";
 import iconImg from '../../../../assets/images/Ellipse 235.png'
+import { AuthContext } from '../../../../context/AuthContext';
 
 
 
 
-export default function navbar({loginData}) {
+export default function navbar() {
+  let {loginData}= useContext(AuthContext);
   return (
   //  <Navbar expand="lg" className="bg-body-tertiary">
   //     <Container>
@@ -57,7 +59,7 @@ export default function navbar({loginData}) {
               width="30"
               height="30"
             />
-           <Link className='text-decoration-none text-dark py-2'>youssef1{loginData?.userName}</Link>
+           <Link className='text-decoration-none text-dark py-2'>{loginData?.userName}</Link>
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item>Profile</Dropdown.Item>

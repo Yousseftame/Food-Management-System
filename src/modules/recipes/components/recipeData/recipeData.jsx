@@ -12,7 +12,7 @@ export default function recipeData() {
 
   const [categoriesList, setCategoriesList]= useState([]);
   let [tagList,setTagList] =useState([]);
-  let {register,formState:{errors},handleSubmit}= useForm();
+  let {register,formState:{errors},handleSubmit,reset}= useForm();
   const navigate = useNavigate();
 
       //toastify
@@ -42,6 +42,7 @@ export default function recipeData() {
             Authorization :localStorage.getItem('token')
           }}); 
           console.log(response);
+          reset();
           navigate('/dashboard/recipes')
           toast.promise(
               resolveAfter3Sec,
@@ -89,7 +90,7 @@ export default function recipeData() {
           headers:{
             Authorization :localStorage.getItem('token')
           }});
-               
+                
 
           // console.log(response.data);
           
@@ -178,7 +179,7 @@ export default function recipeData() {
            <div className="input-group    my-3 flex-nowrap">
               <input {...register('recipeImage',{
                 required:"recipeImage is Required",
-              })} type="file" className="form-control" placeholder="drag and drop" aria-label="Username" aria-describedby="addon-wrapping"/>
+              })} type="file" className="form-control custom-file-dropzone border border-success rounded p-4 text-center dragCustom" placeholder="Drag & Drop or Choose a Item Image to Upload " aria-label="Username" aria-describedby="addon-wrapping"/>
               </div>
               {errors.recipeImage&&<span className='text-danger'>{errors.recipeImage.message}   </span>} 
 

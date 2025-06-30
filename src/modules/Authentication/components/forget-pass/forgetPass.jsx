@@ -83,7 +83,7 @@ transition: Bounce,
              <form onSubmit={handleSubmit(onSubmit)} className=' mt-4 ' >
  
                <div className="input-group flex-nowrap   mb-3">
-               <span className="input-group-text" id="addon-wrapping"><i class="fa-solid fa-mobile-screen-button"></i></span>
+               <span className="input-group-text" id="addon-wrapping"><i className="fa-solid fa-envelope"></i></span>
                <input {...register('email',{ // لازم دى تبقى شبه اللى مستنيها من الباك اند
                  required:'email is required',
                  pattern:{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../../../../assets/images/4 3.png'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
 import { axiosInstance, USERS_URLS } from '../../../../services/urls';
 import { EMAIL_VALIDATION } from '../../../../services/validation';
+import { AuthContext } from '../../../../context/AuthContext';
 
 
 
@@ -14,7 +15,7 @@ import { EMAIL_VALIDATION } from '../../../../services/validation';
 
 
  
-export default function login({saveLoginData}) {
+export default function login() {
      
 
 
@@ -22,6 +23,7 @@ export default function login({saveLoginData}) {
 
   let navigate = useNavigate();
   let {register,formState:{errors, isSubmitting} ,handleSubmit} = useForm();
+  let {saveLoginData} = useContext(AuthContext);
  
   const onSubmit = async(data)=> {
     // console.log(data);
