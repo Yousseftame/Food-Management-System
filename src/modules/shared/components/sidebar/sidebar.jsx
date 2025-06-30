@@ -6,7 +6,7 @@ import changePassword from '../../../Authentication/components/change-pass/chang
 import { AuthContext } from '../../../../context/AuthContext';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import DeleteConfirmation from '../../../shared/components/deleteConfirmation/deleteConfirmation';
+import DeleteConfirmation from '../deleteConfirmation/deleteConfirmation';
 import noDataImg from '../../../../assets/images/nodataimg.png'
 
 
