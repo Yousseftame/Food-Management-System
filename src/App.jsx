@@ -8,7 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { createBrowserRouter, Navigate, RouterProvider, useNavigate } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, Navigate, RouterProvider, useNavigate } from 'react-router-dom';
 import Login from './modules/Authentication/components/login/login'
 import AuthLayout from './modules/shared/components/authLayout/authLayout'
 import Register from './modules/Authentication/components/register/register'
@@ -39,7 +39,7 @@ function App() {
   
 
 
-  const Routes = createBrowserRouter([
+  const Routes = createHashRouter([
     {
     
   
