@@ -85,7 +85,7 @@ transition: Bounce,
               <img className='w-50' src={logo} alt="food-recipe-logo" />
             </div>
             <div className="title my-3">
-              <h4>Log in</h4>
+              <h4>Log inkjlkj</h4>
               <span className='text-muted'>Welcome Back! Please enter your details</span>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className=' mt-4 ' >
